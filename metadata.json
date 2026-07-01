@@ -1,0 +1,6 @@
+{
+  "name": "AI Expense Tracker & Spend Manager",
+  "description": "An expert personal finance tracker and spending optimizer featuring weekly/monthly analysis, an AI financial coach chatbot, downloadable expense data, custom savings goals, and smart receipt parsing.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
