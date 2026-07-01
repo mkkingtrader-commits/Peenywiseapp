@@ -65,7 +65,6 @@ I've automatically connected to your current transaction logs and active savings
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: textToSend,
-          // Exclude the system welcome message to avoid confusing Gemini
           history: messages.filter((m) => m.id !== "welcome").map((m) => ({
             role: m.role,
             content: m.content,
@@ -123,38 +122,41 @@ I've automatically connected to your current transaction logs and active savings
   ];
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-natural-dark-card rounded-3xl border border-natural-secondary dark:border-natural-dark-border shadow-sm overflow-hidden transition-all duration-300">
-      {/* Coach Header */}
-      <div className="flex justify-between items-center px-6 py-4 border-b border-natural-secondary dark:border-natural-dark-border bg-natural-bg/50 dark:bg-natural-dark-bg/30">
-        <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-xl bg-natural-secondary dark:bg-natural-dark-bg/60 text-natural-primary dark:text-natural-dark-text">
+    <div className="flex flex-col h-full bg-bg-card dark:bg-dark-bg-card rounded-2xl border border-border-card dark:border-dark-border shadow-[0_2px_12px_rgba(43,35,32,0.06)] hover:shadow-[0_4px_20px_rgba(43,35,32,0.1)] overflow-hidden transition-all duration-300">
+      {/* Coach Header: Consistent pattern with light blue badge */}
+      <div className="flex justify-between items-center px-5 py-4 border-b border-border-soft dark:border-dark-border bg-bg-card dark:bg-dark-bg-card">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 rounded-xl bg-accent-blue/10 dark:bg-accent-blue/20 text-accent-blue border border-accent-blue/10 flex-shrink-0">
             <Bot className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-zinc-900 dark:text-zinc-50 flex items-center gap-1.5">
+            <h2 className="text-sm font-extrabold tracking-tight text-text-primary dark:text-dark-text-primary flex items-center gap-2 font-display">
               SmartSpend Financial Coach
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/50">
-                <Sparkles className="w-2.5 h-2.5" />
+            </h2>
+            <div className="flex items-center gap-2 mt-0.5">
+              <p className="text-[10px] text-text-secondary dark:text-dark-text-secondary font-semibold">{expenses.length} spends logged</p>
+              <span className="w-1.5 h-1.5 rounded-full bg-text-muted dark:bg-dark-text-muted" />
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold bg-accent-green/10 text-accent-green border border-accent-green/15">
+                <span className="w-1 h-1 rounded-full bg-accent-green animate-ping" />
                 Live AI
               </span>
-            </h2>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">Active context: {expenses.length} spends logged</p>
+            </div>
           </div>
         </div>
 
         <button
           onClick={handleClearChat}
-          className="text-xs font-semibold text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 flex items-center gap-1 p-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+          className="text-[10px] font-extrabold text-text-secondary hover:text-accent-coral dark:text-dark-text-secondary dark:hover:text-accent-coral flex items-center gap-1 p-2 rounded-lg hover:bg-bg-app dark:hover:bg-dark-bg-app transition-colors"
           title="Reset Coach Memory"
           id="btn-clear-coach"
         >
-          <RefreshCw className="w-3.5 h-3.5" />
+          <RefreshCw className="w-3 h-3" />
           Reset Memory
         </button>
       </div>
 
-      {/* Chat Messages Stage */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-4 min-h-0" id="chat-messages-container">
+      {/* Chat Messages Stage (Light Chat Surface) */}
+      <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-bg-card dark:bg-dark-bg-card min-h-0" id="chat-messages-container">
         <AnimatePresence initial={false}>
           {messages.map((msg) => (
             <motion.div
@@ -162,26 +164,31 @@ I've automatically connected to your current transaction logs and active savings
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.15 }}
               className={`flex gap-3 max-w-[85%] ${msg.role === "user" ? "ml-auto flex-row-reverse" : "mr-auto"}`}
             >
-              {/* Avatar Icon */}
-              <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-                msg.role === "user" 
-                  ? "bg-natural-secondary dark:bg-natural-dark-bg text-natural-text dark:text-natural-dark-text"
-                  : "bg-natural-secondary dark:bg-natural-dark-bg text-natural-primary dark:text-natural-dark-text"
-              }`}>
-                {msg.role === "user" ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
+              {/* Avatar Icon with Gradient Outline for Bot */}
+              <div className="flex-shrink-0">
+                {msg.role === "user" ? (
+                  <div className="w-8 h-8 rounded-full bg-bg-card-alt dark:bg-dark-bg-app text-accent-coral flex items-center justify-center border border-border-soft dark:border-dark-border shadow-xs">
+                    <User className="w-4 h-4" />
+                  </div>
+                ) : (
+                  <div className="p-[1.5px] rounded-full bg-accent-gradient shadow-xs">
+                    <div className="w-[29px] h-[29px] rounded-full bg-white dark:bg-dark-bg-card text-accent-coral flex items-center justify-center">
+                      <Bot className="w-3.5 h-3.5" />
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Message Bubble */}
               <div className="flex flex-col gap-1">
-                <div className={`p-4 rounded-2xl text-sm leading-relaxed ${
+                <div className={`p-4 rounded-2xl text-xs leading-relaxed ${
                   msg.role === "user"
-                    ? "bg-natural-primary text-white rounded-tr-none"
-                    : "bg-natural-bg/60 dark:bg-natural-dark-bg text-natural-text dark:text-natural-dark-text rounded-tl-none border border-natural-secondary dark:border-natural-dark-border"
+                    ? "bg-accent-gradient text-white rounded-tr-none font-semibold shadow-xs"
+                    : "bg-bg-card-alt dark:bg-dark-bg-card/45 text-text-primary dark:text-dark-text-primary rounded-tl-none border border-border-soft dark:border-dark-border"
                 }`}>
-                  {/* Handle basic markdown formatting (paragraphs, bolding, bullet lists) */}
                   <div className="space-y-2 whitespace-pre-wrap">
                     {msg.content.split("\n").map((line, lineIdx) => {
                       let processed = line;
@@ -192,7 +199,7 @@ I've automatically connected to your current transaction logs and active savings
                         return (
                           <p key={lineIdx}>
                             {parts.map((part, partIdx) => 
-                              partIdx % 2 === 1 ? <strong key={partIdx} className="font-bold">{part}</strong> : part
+                              partIdx % 2 === 1 ? <strong key={partIdx} className="font-extrabold text-accent-coral dark:text-accent-coral">{part}</strong> : part
                             )}
                           </p>
                         );
@@ -202,7 +209,7 @@ I've automatically connected to your current transaction logs and active savings
                       if (processed.trim().startsWith("- ") || processed.trim().startsWith("* ")) {
                         const cleanLine = processed.trim().replace(/^[-*]\s+/, "");
                         return (
-                          <ul key={lineIdx} className="list-disc pl-5 my-1">
+                          <ul key={lineIdx} className="list-disc pl-4 my-0.5">
                             <li>{cleanLine}</li>
                           </ul>
                         );
@@ -212,7 +219,7 @@ I've automatically connected to your current transaction logs and active savings
                     })}
                   </div>
                 </div>
-                <span className={`text-[10px] text-zinc-400 dark:text-zinc-500 ${msg.role === "user" ? "text-right" : "text-left"}`}>
+                <span className={`text-[9px] text-text-muted dark:text-dark-text-muted ${msg.role === "user" ? "text-right" : "text-left"}`}>
                   {msg.timestamp}
                 </span>
               </div>
@@ -225,13 +232,15 @@ I've automatically connected to your current transaction logs and active savings
               animate={{ opacity: 1, y: 0 }}
               className="flex gap-3 mr-auto max-w-[80%]"
             >
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-natural-secondary dark:bg-natural-dark-bg text-natural-primary dark:text-natural-dark-text flex items-center justify-center animate-pulse">
-                <Bot className="w-4 h-4" />
+              <div className="p-[1.5px] rounded-full bg-accent-gradient animate-pulse">
+                <div className="w-[29px] h-[29px] rounded-full bg-white dark:bg-dark-bg-card text-accent-coral flex items-center justify-center">
+                  <Bot className="w-3.5 h-3.5" />
+                </div>
               </div>
               <div className="flex flex-col gap-1">
-                <div className="px-4 py-3 bg-natural-bg/60 dark:bg-natural-dark-bg rounded-2xl rounded-tl-none border border-natural-secondary dark:border-natural-dark-border flex items-center gap-2">
-                  <Loader2 className="w-4 h-4 text-natural-primary dark:text-natural-dark-text animate-spin" />
-                  <span className="text-xs font-semibold text-natural-muted dark:text-natural-dark-text/75">SmartSpend AI is formulating customized budget plans...</span>
+                <div className="px-4 py-3 bg-bg-card-alt dark:bg-dark-bg-card/45 rounded-2xl rounded-tl-none border border-border-soft dark:border-dark-border flex items-center gap-2">
+                  <Loader2 className="w-3.5 h-3.5 text-accent-coral animate-spin" />
+                  <span className="text-[11px] font-bold text-text-secondary dark:text-dark-text-secondary animate-pulse">Formulating smart advice...</span>
                 </div>
               </div>
             </motion.div>
@@ -241,13 +250,13 @@ I've automatically connected to your current transaction logs and active savings
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="p-3 bg-red-55/10 dark:bg-red-950/20 border border-red-200/50 dark:border-red-900/50 rounded-2xl flex items-center gap-2 text-red-700 dark:text-red-400 text-xs font-medium"
+              className="p-3 bg-red-50/50 dark:bg-red-950/20 border border-red-200/50 dark:border-red-900/50 rounded-xl flex items-center gap-2 text-accent-coral text-xs font-medium"
             >
-              <AlertCircle className="w-4 h-4 flex-shrink-0" />
+              <AlertCircle className="w-4 h-4 flex-shrink-0 text-accent-coral" />
               <span className="flex-1">{error}</span>
               <button
                 onClick={() => handleSendMessage(messages[messages.length - 1]?.content || "")}
-                className="px-2.5 py-1 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors"
+                className="px-2.5 py-1 bg-accent-coral text-white font-bold rounded-lg hover:opacity-90 transition-all cursor-pointer"
                 id="btn-retry-chat"
               >
                 Retry
@@ -258,14 +267,14 @@ I've automatically connected to your current transaction logs and active savings
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Suggested Quick Prompts */}
+      {/* Suggested Quick Prompts - Rounded pill buttons with hover lift + coral border */}
       {messages.length === 1 && (
-        <div className="px-6 py-2 border-t border-natural-secondary dark:border-natural-dark-border overflow-x-auto whitespace-nowrap scrollbar-none flex gap-2" id="quick-prompts-tray">
+        <div className="px-5 py-2.5 bg-bg-card dark:bg-dark-bg-card border-t border-border-soft dark:border-dark-border overflow-x-auto whitespace-nowrap scrollbar-none flex gap-2" id="quick-prompts-tray">
           {suggestions.map((sug, i) => (
             <button
               key={i}
               onClick={() => handleSendMessage(sug.prompt)}
-              className="inline-block text-xs font-semibold text-natural-muted dark:text-natural-subtle hover:text-natural-primary dark:hover:text-natural-dark-text bg-natural-secondary dark:bg-natural-dark-bg hover:bg-natural-secondary/60 dark:hover:bg-natural-dark-card px-3.5 py-2 rounded-xl transition-all border border-transparent hover:border-natural-border"
+              className="inline-block text-xs font-bold rounded-full border border-accent-coral/30 hover:border-accent-coral px-4 py-1.5 bg-white dark:bg-dark-bg-card hover:-translate-y-0.5 hover:shadow-xs transition-all text-text-secondary hover:text-accent-coral dark:text-dark-text-secondary dark:hover:text-accent-coral cursor-pointer"
               id={`quick-prompt-${i}`}
             >
               {sug.label}
@@ -274,28 +283,28 @@ I've automatically connected to your current transaction logs and active savings
         </div>
       )}
 
-      {/* Chat Input Area */}
+      {/* Chat Input Area (Rounded Pill Form) */}
       <form
         onSubmit={(e) => {
           e.preventDefault();
           handleSendMessage(input);
         }}
-        className="p-4 border-t border-natural-secondary dark:border-natural-dark-border bg-natural-bg/50 dark:bg-natural-dark-bg/10 flex gap-2"
+        className="p-4 border-t border-border-soft dark:border-dark-border bg-bg-card dark:bg-dark-bg-card flex gap-2"
         id="chat-input-form"
       >
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask SmartSpend Coach: 'How can I save $200 on groceries?'"
+          placeholder="Ask PennyWise Coach: 'Design a 50/30/20 plan...'"
           disabled={loading}
-          className="flex-1 px-4.5 py-3 text-sm rounded-xl bg-white dark:bg-zinc-950 border border-natural-secondary dark:border-natural-dark-border focus:outline-none focus:ring-2 focus:ring-natural-primary/20 focus:border-natural-primary text-natural-text dark:text-natural-dark-text placeholder-natural-subtle dark:placeholder-natural-muted transition-all disabled:opacity-50"
+          className="flex-1 px-5 py-2.5 text-xs rounded-full bg-bg-app dark:bg-dark-bg-app border border-border-soft dark:border-dark-border focus:outline-none focus:ring-2 focus:ring-accent-coral/20 focus:border-accent-coral text-text-primary dark:text-dark-text-primary placeholder-text-muted transition-all disabled:opacity-50"
           id="chat-input-field"
         />
         <button
           type="submit"
           disabled={!input.trim() || loading}
-          className="p-3 bg-natural-primary hover:opacity-90 text-white rounded-xl transition-all shadow-md shadow-natural-primary/10 hover:shadow-natural-primary/20 flex items-center justify-center disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
+          className="p-2.5 bg-accent-gradient hover:opacity-90 text-white rounded-full transition-all shadow-md shadow-accent-coral/10 hover:shadow-accent-coral/25 flex items-center justify-center disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105"
           id="btn-chat-send"
         >
           <Send className="w-4 h-4" />

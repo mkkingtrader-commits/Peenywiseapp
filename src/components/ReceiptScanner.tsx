@@ -189,21 +189,21 @@ export default function ReceiptScanner({ onAddExpense, currency }: ReceiptScanne
   };
 
   return (
-    <div className="bg-white dark:bg-natural-dark-card rounded-3xl p-6 border border-natural-secondary dark:border-natural-dark-border shadow-sm transition-all duration-300">
-      <div className="flex items-center gap-2.5 mb-5" id="scanner-title-sec">
-        <div className="p-2 rounded-xl bg-natural-secondary dark:bg-natural-dark-bg/60 text-natural-primary dark:text-natural-dark-text">
+    <div className="bg-bg-card dark:bg-dark-bg-card rounded-2xl p-5 border border-border-card dark:border-dark-border shadow-[0_2px_12px_rgba(43,35,32,0.06)] hover:shadow-[0_4px_20px_rgba(43,35,32,0.1)] transition-all duration-300">
+      <div className="flex items-center gap-3 mb-5" id="scanner-title-sec">
+        <div className="p-2.5 rounded-xl bg-bg-card-alt dark:bg-dark-bg-app text-accent-coral border border-border-soft dark:border-dark-border flex-shrink-0">
           <Camera className="w-5 h-5" />
         </div>
         <div>
-          <h2 className="text-base font-bold text-natural-text dark:text-natural-dark-text flex items-center gap-1.5">
+          <h2 className="text-base font-extrabold tracking-tight text-text-primary dark:text-dark-text-primary flex items-center gap-2 font-display">
             AI Smart Receipt Scanner
-            <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[9px] font-bold bg-natural-secondary text-natural-primary dark:bg-natural-dark-bg dark:text-natural-dark-text border border-natural-secondary dark:border-natural-dark-border">
-              <Sparkles className="w-2.5 h-2.5 text-natural-primary" />
+            <span className="inline-flex items-center gap-0.5 px-2.5 py-0.5 rounded-full text-[9px] font-bold bg-accent-coral/10 text-accent-coral border border-accent-coral/15">
+              <Sparkles className="w-2.5 h-2.5 text-accent-coral" />
               Vision
             </span>
           </h2>
-          <p className="text-xs text-natural-muted dark:text-natural-subtle">
-            Upload, drag, or capture a receipt image to auto-populate transaction details.
+          <p className="text-xs text-text-secondary dark:text-dark-text-secondary">
+            Upload or select a receipt image to auto-populate transaction logs
           </p>
         </div>
       </div>
@@ -217,8 +217,8 @@ export default function ReceiptScanner({ onAddExpense, currency }: ReceiptScanne
         onClick={() => fileInputRef.current?.click()}
         className={`border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-all ${
           isDragActive
-            ? "border-natural-primary bg-natural-primary/5 dark:bg-natural-dark-bg/20"
-            : "border-natural-secondary dark:border-natural-dark-border hover:border-natural-primary dark:hover:border-natural-primary hover:bg-natural-bg/20 dark:hover:bg-natural-dark-bg/25"
+            ? "border-accent-coral bg-bg-card-alt/80 dark:bg-dark-bg-app/80"
+            : "border-border-card dark:border-dark-border hover:border-accent-coral dark:hover:border-accent-coral hover:bg-bg-card-alt/30 dark:hover:bg-dark-bg-app/20"
         }`}
         id="drag-and-drop-container"
       >
@@ -233,33 +233,33 @@ export default function ReceiptScanner({ onAddExpense, currency }: ReceiptScanne
 
         {loading ? (
           <div className="py-4 flex flex-col items-center justify-center gap-3">
-            <Loader2 className="w-8 h-8 text-natural-primary animate-spin" />
-            <p className="text-sm font-semibold text-natural-text dark:text-natural-dark-text">Reading Receipt via Gemini Vision...</p>
-            <p className="text-xs text-natural-muted dark:text-natural-subtle">Extracting merchant, items, dates, and category totals...</p>
+            <Loader2 className="w-8 h-8 text-accent-coral animate-spin" />
+            <p className="text-sm font-bold text-text-primary dark:text-dark-text-primary">Reading Receipt via Gemini Vision...</p>
+            <p className="text-xs text-text-secondary dark:text-dark-text-secondary">Extracting merchant, items, and category totals...</p>
           </div>
         ) : (
           <div className="py-4 flex flex-col items-center justify-center gap-2">
-            <div className="p-3 bg-natural-secondary dark:bg-natural-dark-bg text-natural-muted dark:text-natural-dark-text rounded-full mb-1">
+            <div className="p-3 bg-bg-card-alt dark:bg-dark-bg-app text-accent-coral rounded-full mb-1 border border-border-soft dark:border-dark-border">
               <Upload className="w-5 h-5" />
             </div>
-            <p className="text-sm font-bold text-natural-text dark:text-natural-dark-text">
-              Drag and drop your receipt here, or <span className="text-natural-primary hover:underline">browse files</span>
+            <p className="text-sm font-bold text-text-primary dark:text-dark-text-primary">
+              Drag and drop your receipt here, or <span className="text-accent-coral hover:underline">browse files</span>
             </p>
-            <p className="text-[11px] text-natural-muted dark:text-natural-subtle">Supports PNG, JPG, WEBP formats up to 10MB</p>
+            <p className="text-[11px] text-text-secondary dark:text-dark-text-secondary">Supports PNG, JPG, WEBP formats up to 10MB</p>
           </div>
         )}
       </div>
 
       {error && (
-        <div className="mt-4 p-3 bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/40 rounded-xl flex items-center gap-2 text-red-700 dark:text-red-400 text-xs font-semibold" id="scanner-error">
-          <AlertCircle className="w-4 h-4 flex-shrink-0" />
+        <div className="mt-4 p-3 bg-red-50/50 dark:bg-red-950/20 border border-red-100/50 dark:border-red-900/40 rounded-xl flex items-center gap-2 text-accent-pink text-xs font-semibold" id="scanner-error">
+          <AlertCircle className="w-4 h-4 flex-shrink-0 text-accent-pink" />
           <span>{error}</span>
         </div>
       )}
 
       {success && (
-        <div className="mt-4 p-3 bg-emerald-50 dark:bg-emerald-950/25 border border-emerald-100 dark:border-emerald-900/40 rounded-xl flex items-center gap-2 text-emerald-700 dark:text-emerald-400 text-xs font-semibold" id="scanner-success">
-          <Check className="w-4 h-4 flex-shrink-0" />
+        <div className="mt-4 p-3 bg-accent-green/10 dark:bg-accent-green/20 border border-accent-green/15 rounded-xl flex items-center gap-2 text-accent-green text-xs font-semibold" id="scanner-success">
+          <Check className="w-4 h-4 flex-shrink-0 text-accent-green" />
           <span>Transaction successfully scanned, verified, and logged!</span>
         </div>
       )}
@@ -267,16 +267,16 @@ export default function ReceiptScanner({ onAddExpense, currency }: ReceiptScanne
       {/* Demo Quick Try Buttons */}
       {!parsedExpense && !loading && (
         <div className="mt-4" id="sample-receipts-area">
-          <p className="text-[10px] font-bold text-natural-muted dark:text-natural-subtle uppercase tracking-wider mb-2">No receipt image? Try a template:</p>
+          <p className="text-[10px] font-black text-text-secondary dark:text-dark-text-secondary uppercase tracking-wider mb-2.5">No receipt image? Try a sample template:</p>
           <div className="grid grid-cols-3 gap-2">
             {SAMPLE_RECEIPTS.map((sample, idx) => (
               <button
                 key={idx}
                 onClick={() => handleSelectSample(sample)}
-                className="flex items-center gap-1.5 justify-center px-2.5 py-2 text-[11px] font-bold rounded-xl border border-natural-secondary dark:border-natural-dark-border hover:border-natural-primary dark:hover:border-natural-primary text-natural-text dark:text-natural-dark-text hover:text-natural-primary bg-natural-bg/50 dark:bg-natural-dark-bg hover:bg-natural-secondary/50 transition-all cursor-pointer"
+                className="flex items-center gap-1.5 justify-center px-2.5 py-2 text-[11px] font-bold rounded-xl border border-border-soft dark:border-dark-border hover:border-accent-coral dark:hover:border-accent-coral text-text-primary dark:text-dark-text-primary hover:text-accent-coral bg-bg-card-alt/40 dark:bg-dark-bg-card/40 hover:bg-white dark:hover:bg-dark-bg-app transition-all cursor-pointer hover:scale-[1.02]"
                 id={`sample-receipt-${idx}`}
               >
-                <FileText className="w-3 h-3 text-natural-primary" />
+                <FileText className="w-3.5 h-3.5 text-accent-coral" />
                 {sample.name.split(" ")[0]}
               </button>
             ))}
@@ -286,20 +286,20 @@ export default function ReceiptScanner({ onAddExpense, currency }: ReceiptScanne
 
       {/* Verification Review Interface */}
       {parsedExpense && (
-        <div className="mt-5 p-4 rounded-2xl bg-natural-bg/40 dark:bg-natural-dark-bg border border-natural-secondary dark:border-natural-dark-border animate-fade-in" id="receipt-review-card">
-          <div className="flex justify-between items-start mb-3 border-b border-natural-secondary dark:border-natural-dark-border pb-2">
+        <div className="mt-5 p-4 rounded-xl bg-bg-card-alt/50 dark:bg-dark-bg-app border border-border-soft dark:border-dark-border animate-fade-in" id="receipt-review-card">
+          <div className="flex justify-between items-start mb-3 border-b border-border-soft dark:border-dark-border pb-2">
             <div>
-              <span className="text-[9px] font-bold uppercase bg-natural-secondary dark:bg-natural-dark-bg/80 text-natural-primary dark:text-natural-dark-text px-2 py-0.5 rounded-md border border-natural-secondary">
+              <span className="text-[9px] font-bold uppercase bg-accent-coral/10 text-accent-coral px-2.5 py-0.5 rounded-full border border-accent-coral/15 inline-block">
                 Verify Scanned Details
               </span>
-              <h3 className="text-sm font-bold text-natural-text dark:text-natural-dark-text mt-1">{parsedExpense.merchant}</h3>
-              <p className="text-[10px] text-natural-muted dark:text-natural-subtle">{parsedExpense.date}</p>
+              <h3 className="text-xs font-extrabold text-text-primary dark:text-dark-text-primary mt-2">{parsedExpense.merchant}</h3>
+              <p className="text-[10px] text-text-secondary dark:text-dark-text-secondary font-semibold mt-0.5">{parsedExpense.date}</p>
             </div>
             <div className="text-right">
-              <p className="text-sm font-extrabold text-natural-primary dark:text-natural-dark-text">
+              <p className="text-sm font-black text-accent-coral font-display">
                 {currency}{parsedExpense.amount.toFixed(2)}
               </p>
-              <p className="text-[10px] text-natural-muted dark:text-natural-subtle">{parsedExpense.category}</p>
+              <p className="text-[10px] text-text-secondary dark:text-dark-text-secondary font-semibold">{parsedExpense.category}</p>
             </div>
           </div>
 
@@ -307,9 +307,9 @@ export default function ReceiptScanner({ onAddExpense, currency }: ReceiptScanne
           {parsedExpense.items && parsedExpense.items.length > 0 && (
             <div className="space-y-1 max-h-32 overflow-y-auto mb-3 pr-1" id="scanned-items-list">
               {parsedExpense.items.map((item, itemIdx) => (
-                <div key={itemIdx} className="flex justify-between text-[11px] text-natural-text dark:text-natural-dark-text hover:bg-natural-secondary/40 p-1 rounded transition-colors">
-                  <span className="truncate max-w-[75%]">{item.name}</span>
-                  <span className="font-semibold">{currency}{item.price.toFixed(2)}</span>
+                <div key={itemIdx} className="flex justify-between text-[11px] text-text-primary dark:text-dark-text-primary hover:bg-bg-card-alt p-1 rounded-lg transition-colors">
+                  <span className="truncate max-w-[75%] font-medium">{item.name}</span>
+                  <span className="font-bold">{currency}{item.price.toFixed(2)}</span>
                 </div>
               ))}
             </div>
@@ -319,14 +319,14 @@ export default function ReceiptScanner({ onAddExpense, currency }: ReceiptScanne
           <div className="flex gap-2">
             <button
               onClick={handleApproveExpense}
-              className="flex-1 py-2 bg-natural-primary hover:opacity-90 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-natural-primary/10 cursor-pointer"
+              className="flex-1 py-2 bg-accent-gradient hover:opacity-90 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-accent-coral/10 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
               id="btn-approve-scanned"
             >
               Verify &amp; Log Spends
             </button>
             <button
               onClick={() => setParsedExpense(null)}
-              className="px-3.5 py-2 bg-natural-secondary dark:bg-natural-dark-bg text-natural-text dark:text-natural-dark-text text-xs font-bold rounded-xl transition-colors cursor-pointer border border-natural-secondary dark:border-natural-dark-border"
+              className="px-4 py-2 bg-bg-app hover:bg-border-soft dark:bg-dark-bg-app text-text-primary dark:text-dark-text-primary text-xs font-bold rounded-xl transition-colors cursor-pointer border border-border-soft dark:border-dark-border"
               id="btn-cancel-scanned"
             >
               Cancel

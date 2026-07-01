@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { UserProfile, Expense, SavingsGoal } from "../types";
-import { User, Mail, DollarSign, Download, Trash2, Sun, Moon, SwitchCamera, Check } from "lucide-react";
+import { User, Mail, DollarSign, Download, Trash2, Sun, Moon, Check, Key } from "lucide-react";
 
 interface ProfilePanelProps {
   profile: UserProfile;
@@ -68,14 +68,14 @@ export default function ProfilePanel({
       expenses,
       savingsGoals,
       exportedAt: new Date().toISOString(),
-      app: "SmartSpend AI Personal Finance"
+      app: "PennyWise AI Personal Finance"
     };
 
     const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `smartspend_financial_report_${profile.name.replace(/\s+/g, "_").toLowerCase()}.json`;
+    link.download = `pennywise_financial_report_${profile.name.replace(/\s+/g, "_").toLowerCase()}.json`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -83,86 +83,99 @@ export default function ProfilePanel({
   };
 
   return (
-    <div className="bg-white dark:bg-natural-dark-card rounded-3xl p-6 border border-natural-secondary dark:border-natural-dark-border shadow-sm transition-all duration-300">
+    <div className="bg-bg-card dark:bg-dark-bg-card rounded-2xl p-5 border border-border-card dark:border-dark-border shadow-[0_2px_12px_rgba(43,35,32,0.06)] hover:shadow-[0_4px_20px_rgba(43,35,32,0.1)] transition-all duration-300">
       <div className="flex justify-between items-center mb-5" id="profile-panel-header">
-        <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-xl bg-natural-secondary dark:bg-natural-dark-bg/60 text-natural-primary dark:text-natural-dark-text">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 rounded-xl bg-bg-card-alt dark:bg-dark-bg-app text-accent-coral border border-border-soft dark:border-dark-border flex-shrink-0">
             <User className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-natural-text dark:text-natural-dark-text">Profile &amp; Settings</h2>
-            <p className="text-xs text-natural-muted dark:text-natural-subtle">Manage user accounts, switch themes, and export reports</p>
+            <h2 className="text-base font-extrabold tracking-tight text-text-primary dark:text-dark-text-primary font-display">
+              Profile &amp; Settings
+            </h2>
+            <p className="text-xs text-text-secondary dark:text-dark-text-secondary">
+              Manage profiles, toggle themes, and export reports
+            </p>
           </div>
         </div>
 
-        {/* Brightness/Darkness Theme Selector */}
+        {/* Tactile Brightness/Darkness Theme Switcher */}
         <button
           onClick={onToggleTheme}
-          className="p-2.5 bg-natural-secondary dark:bg-natural-dark-bg hover:opacity-90 text-natural-text dark:text-natural-dark-text rounded-xl transition-all cursor-pointer flex items-center justify-center border border-natural-secondary dark:border-natural-dark-border"
+          className="p-2.5 bg-bg-app hover:bg-border-soft dark:bg-dark-bg-app text-text-primary dark:text-dark-text-primary rounded-xl transition-all cursor-pointer flex items-center justify-center border border-border-soft dark:border-dark-border hover:scale-105 active:scale-95 shadow-xs"
           title={`Switch to ${theme === "light" ? "Dark" : "Light"} Theme`}
           id="btn-theme-toggle"
         >
-          {theme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+          {theme === "light" ? <Moon className="w-4 h-4 text-accent-coral" /> : <Sun className="w-4 h-4 text-accent-yellow" />}
         </button>
       </div>
 
       {/* Simulated Switch Profile / Login Area */}
-      <div className="mb-5 p-4 rounded-2xl bg-natural-bg/50 dark:bg-natural-dark-bg/40 border border-natural-secondary/60 dark:border-natural-dark-border/40" id="preset-login-tray">
-        <span className="text-[10px] font-bold text-natural-subtle dark:text-natural-muted uppercase tracking-wider block mb-2">Simulate Personal Profile Login:</span>
+      <div className="mb-5 p-4 rounded-xl bg-bg-card-alt/70 dark:bg-dark-bg-card/45 border border-border-soft dark:border-dark-border" id="preset-login-tray">
+        <span className="text-[10px] font-black text-accent-coral uppercase tracking-wider block mb-2.5 flex items-center gap-1">
+          <Key className="w-3.5 h-3.5" /> Simulate Profile Login:
+        </span>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-          {PRESET_PROFILES.map((preset, idx) => (
-            <button
-              key={idx}
-              onClick={() => handleSimulatedLogin(preset)}
-              className="flex items-center justify-between p-2.5 text-left text-xs font-semibold rounded-xl border border-natural-secondary dark:border-natural-dark-border hover:border-natural-primary text-natural-text dark:text-natural-dark-text hover:text-natural-primary bg-white dark:bg-natural-dark-card transition-all cursor-pointer"
-              id={`preset-login-${idx}`}
-            >
-              <div className="truncate max-w-[80%]">
-                <p className="font-bold truncate text-natural-text dark:text-natural-dark-text">{preset.name.split(" ")[0]}</p>
-                <p className="text-[10px] text-natural-muted dark:text-natural-subtle truncate">{preset.email}</p>
-              </div>
-              <span className="text-natural-primary dark:text-natural-dark-text font-bold">{preset.currency}</span>
-            </button>
-          ))}
+          {PRESET_PROFILES.map((preset, idx) => {
+            const isActive = profile.email === preset.email;
+            return (
+              <button
+                key={idx}
+                onClick={() => handleSimulatedLogin(preset)}
+                className={`flex items-center justify-between p-2.5 text-left text-xs font-bold rounded-xl border transition-all cursor-pointer ${
+                  isActive 
+                    ? "border-accent-coral bg-white dark:bg-dark-bg-app text-accent-coral shadow-xs ring-2 ring-accent-coral/10" 
+                    : "border-border-soft dark:border-dark-border hover:border-accent-coral/60 text-text-primary dark:text-dark-text-primary bg-white dark:bg-dark-bg-app hover:shadow-xs"
+                }`}
+                id={`preset-login-${idx}`}
+              >
+                <div className="truncate max-w-[80%]">
+                  <p className="font-extrabold truncate">{preset.name.split(" ")[0]}</p>
+                  <p className="text-[9px] text-text-secondary dark:text-dark-text-secondary font-semibold truncate mt-0.5">{preset.email}</p>
+                </div>
+                <span className={`font-black ${isActive ? "text-accent-coral" : "text-text-secondary"}`}>{preset.currency}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
       {/* Profile Editing Form */}
-      <form onSubmit={handleSaveProfile} className="space-y-4 mb-6" id="profile-edit-form">
-        <h3 className="text-xs font-bold text-natural-muted dark:text-natural-subtle uppercase tracking-wider border-b border-natural-secondary dark:border-natural-dark-border pb-1.5">Configure Active Profile</h3>
+      <form onSubmit={handleSaveProfile} className="space-y-4 mb-5" id="profile-edit-form">
+        <h3 className="text-xs font-black text-text-primary dark:text-dark-text-primary uppercase tracking-wider border-b border-border-soft dark:border-dark-border pb-1.5">Configure Active Profile</h3>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-[11px] font-semibold text-natural-muted dark:text-natural-subtle mb-1 flex items-center gap-1">
-              <User className="w-3 h-3 text-natural-primary" /> Name
+            <label className="block text-[11px] font-bold text-text-secondary dark:text-dark-text-secondary mb-1 flex items-center gap-1">
+              <User className="w-3 h-3 text-accent-coral" /> Name
             </label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full px-3 py-2 text-xs rounded-xl bg-natural-bg/40 dark:bg-natural-dark-bg border border-natural-secondary dark:border-natural-dark-border focus:outline-none focus:ring-2 focus:ring-natural-primary/15 focus:border-natural-primary text-natural-text dark:text-natural-dark-text"
+              className="w-full px-4 py-2.5 text-xs rounded-xl bg-white dark:bg-dark-bg-app border border-border-card dark:border-dark-border focus:outline-none focus:ring-2 focus:ring-accent-coral/20 focus:border-accent-coral text-text-primary dark:text-dark-text-primary transition-all"
             />
           </div>
 
           <div>
-            <label className="block text-[11px] font-semibold text-natural-muted dark:text-natural-subtle mb-1 flex items-center gap-1">
-              <Mail className="w-3 h-3 text-natural-primary" /> Email
+            <label className="block text-[11px] font-bold text-text-secondary dark:text-dark-text-secondary mb-1 flex items-center gap-1">
+              <Mail className="w-3 h-3 text-accent-coral" /> Email
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-3 py-2 text-xs rounded-xl bg-natural-bg/40 dark:bg-natural-dark-bg border border-natural-secondary dark:border-natural-dark-border focus:outline-none focus:ring-2 focus:ring-natural-primary/15 focus:border-natural-primary text-natural-text dark:text-natural-dark-text"
+              className="w-full px-4 py-2.5 text-xs rounded-xl bg-white dark:bg-dark-bg-app border border-border-card dark:border-dark-border focus:outline-none focus:ring-2 focus:ring-accent-coral/20 focus:border-accent-coral text-text-primary dark:text-dark-text-primary transition-all"
             />
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-[11px] font-semibold text-natural-muted dark:text-natural-subtle mb-1 flex items-center gap-1">
-              <DollarSign className="w-3 h-3 text-natural-primary" /> Monthly Income Limit
+            <label className="block text-[11px] font-bold text-text-secondary dark:text-dark-text-secondary mb-1 flex items-center gap-1">
+              <DollarSign className="w-3 h-3 text-accent-coral" /> Monthly Income Limit
             </label>
             <input
               type="number"
@@ -170,18 +183,18 @@ export default function ProfilePanel({
               onChange={(e) => setIncome(e.target.value)}
               required
               min="1"
-              className="w-full px-3 py-2 text-xs rounded-xl bg-natural-bg/40 dark:bg-natural-dark-bg border border-natural-secondary dark:border-natural-dark-border focus:outline-none focus:ring-2 focus:ring-natural-primary/15 focus:border-natural-primary text-natural-text dark:text-natural-dark-text"
+              className="w-full px-4 py-2.5 text-xs rounded-xl bg-white dark:bg-dark-bg-app border border-border-card dark:border-dark-border focus:outline-none focus:ring-2 focus:ring-accent-coral/20 focus:border-accent-coral text-text-primary dark:text-dark-text-primary transition-all"
             />
           </div>
 
           <div>
-            <label className="block text-[11px] font-semibold text-natural-muted dark:text-natural-subtle mb-1">
+            <label className="block text-[11px] font-bold text-text-secondary dark:text-dark-text-secondary mb-1">
               Preferred Currency Sign
             </label>
             <select
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
-              className="w-full px-3 py-2 text-xs rounded-xl bg-natural-bg/40 dark:bg-natural-dark-bg border border-natural-secondary dark:border-natural-dark-border focus:outline-none focus:ring-2 focus:ring-natural-primary/15 focus:border-natural-primary text-natural-text dark:text-natural-dark-text"
+              className="w-full px-4 py-2.5 text-xs rounded-xl bg-white dark:bg-dark-bg-app border border-border-card dark:border-dark-border focus:outline-none focus:ring-2 focus:ring-accent-coral/20 focus:border-accent-coral text-text-primary dark:text-dark-text-primary cursor-pointer transition-all"
             >
               <option value="$">USD ($)</option>
               <option value="€">EUR (€)</option>
@@ -194,7 +207,7 @@ export default function ProfilePanel({
 
         <button
           type="submit"
-          className="w-full py-2 bg-natural-primary hover:opacity-90 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-natural-primary/10 cursor-pointer flex items-center justify-center gap-1"
+          className="w-full py-2.5 bg-accent-gradient hover:opacity-90 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-accent-coral/10 cursor-pointer flex items-center justify-center gap-1.5 hover:scale-[1.01] active:scale-[0.99]"
           id="btn-save-profile"
         >
           {isSaved ? <Check className="w-3.5 h-3.5" /> : null}
@@ -203,16 +216,16 @@ export default function ProfilePanel({
       </form>
 
       {/* Download and Clear History area */}
-      <div className="space-y-3 pt-4 border-t border-natural-secondary dark:border-natural-dark-border" id="data-management-actions">
-        <h3 className="text-xs font-bold text-natural-muted dark:text-natural-subtle uppercase tracking-wider">Report &amp; Data Operations</h3>
+      <div className="space-y-3 pt-4 border-t border-border-soft dark:border-dark-border" id="data-management-actions">
+        <h3 className="text-xs font-black text-text-primary dark:text-dark-text-primary uppercase tracking-wider">Report &amp; Data Operations</h3>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <button
             onClick={handleDownloadBackup}
-            className="flex items-center justify-center gap-1.5 py-2.5 bg-natural-secondary dark:bg-natural-dark-bg hover:opacity-90 text-natural-text dark:text-natural-dark-text text-xs font-bold rounded-xl transition-all cursor-pointer border border-natural-secondary dark:border-natural-dark-border"
+            className="flex items-center justify-center gap-1.5 py-2.5 bg-bg-app hover:bg-border-soft dark:bg-dark-bg-app text-text-primary dark:text-dark-text-primary text-xs font-bold rounded-xl transition-all cursor-pointer border border-border-soft dark:border-dark-border hover:scale-[1.01] active:scale-[0.99]"
             id="btn-download-backup"
           >
-            <Download className="w-3.5 h-3.5 text-natural-primary dark:text-natural-dark-text" />
+            <Download className="w-3.5 h-3.5 text-accent-coral" />
             Download report (.JSON)
           </button>
 
@@ -223,13 +236,13 @@ export default function ProfilePanel({
                   onClearHistory();
                   setConfirmClear(false);
                 }}
-                className="flex-1 py-2.5 bg-red-650 hover:bg-red-750 text-white text-xs font-bold rounded-xl transition-colors cursor-pointer flex items-center justify-center font-bold"
+                className="flex-1 py-2.5 bg-accent-pink hover:opacity-90 text-white text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center hover:scale-[1.01] active:scale-[0.99]"
               >
                 Yes, Delete All
               </button>
               <button
                 onClick={() => setConfirmClear(false)}
-                className="px-3.5 py-2.5 bg-natural-secondary dark:bg-natural-dark-bg text-natural-text dark:text-natural-dark-text text-xs font-bold rounded-xl transition-colors cursor-pointer border border-natural-secondary dark:border-natural-dark-border"
+                className="px-4 py-2.5 bg-bg-app dark:bg-dark-bg-app text-text-primary dark:text-dark-text-primary text-xs font-bold rounded-xl transition-all cursor-pointer border border-border-soft dark:border-dark-border hover:scale-[1.01]"
               >
                 No
               </button>
@@ -237,7 +250,7 @@ export default function ProfilePanel({
           ) : (
             <button
               onClick={() => setConfirmClear(true)}
-              className="flex items-center justify-center gap-1.5 py-2.5 bg-red-50 hover:bg-red-100 dark:bg-red-950/25 dark:hover:bg-red-950/40 text-red-700 dark:text-red-400 text-xs font-bold rounded-xl transition-all cursor-pointer border border-red-200/50 dark:border-red-900/40"
+              className="flex items-center justify-center gap-1.5 py-2.5 bg-red-50 hover:bg-red-100 dark:bg-red-950/20 dark:hover:bg-red-950/30 text-accent-pink text-xs font-bold rounded-xl transition-all cursor-pointer border border-red-100 dark:border-red-950 hover:scale-[1.01] active:scale-[0.99]"
               id="btn-clear-history"
             >
               <Trash2 className="w-3.5 h-3.5" />

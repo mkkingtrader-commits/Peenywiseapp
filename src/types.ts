@@ -53,16 +53,16 @@ export const CATEGORIES: ExpenseCategory[] = [
   "Other",
 ];
 
-// Color mapping for categories to keep the design beautiful and consistent
+// Color mapping for categories to keep the design beautiful, consistent, and warm-toned
 export const CATEGORY_COLORS: Record<string, string> = {
-  Groceries: "#10B981", // Emerald
-  "Dining Out": "#F59E0B", // Amber
-  Transport: "#3B82F6", // Blue
-  Utilities: "#EF4444", // Red
-  Entertainment: "#8B5CF6", // Purple
-  Shopping: "#EC4899", // Pink
-  Healthcare: "#14B8A6", // Teal
-  "Personal Care": "#6366F1", // Indigo
-  Education: "#F97316", // Orange
-  Other: "#6B7280", // Gray
+  Groceries: "#4CAF7D", // accent-green (sage green)
+  "Dining Out": "#FF8A65", // accent-coral
+  Transport: "#5B8DEF", // accent-blue
+  Utilities: "#E59480", // soft terracotta
+  Entertainment: "#9B7FE8", // accent-purple
+  Shopping: "#F4568C", // accent-pink
+  Healthcare: "#71B7B9", // soft sage/teal
+  "Personal Care": "#F4B740", // accent-yellow
+  Education: "#C4A5DC", // soft lavender
+  Other: "#B3A79F", // warm sand gray
 };

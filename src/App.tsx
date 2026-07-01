@@ -151,38 +151,38 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors duration-300">
-      {/* Decorative Top Accent Lines */}
-      <div className="h-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 w-full" />
+    <div className="min-h-screen bg-bg-app dark:bg-dark-bg-app text-text-primary dark:text-dark-text-primary font-sans transition-colors duration-300">
+      {/* Decorative Top Accent Line with Warm Coral Gradient */}
+      <div className="h-1.5 bg-accent-gradient w-full" />
 
       {/* Main Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         
         {/* Executive Header */}
-        <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-6 border-b border-zinc-200/50 dark:border-zinc-800/60" id="executive-header">
+        <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-6 border-b border-border-soft dark:border-dark-border" id="executive-header">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <div className="flex items-center justify-center p-2 rounded-2xl bg-indigo-600 text-white shadow-md shadow-indigo-600/10">
+              <div className="flex items-center justify-center p-2 rounded-2xl bg-bg-card-alt dark:bg-dark-bg-card border border-border-soft dark:border-dark-border text-accent-coral shadow-sm">
                 <Wallet className="w-5 h-5" />
               </div>
-              <span className="text-xs font-extrabold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
-                Professional Wealth Engine
+              <span className="text-xs font-extrabold uppercase tracking-widest text-accent-coral">
+                PennyWise Smart Wealth Engine
               </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-900 dark:text-zinc-50">
-              Welcome, {profile.name.split(" ")[0]}!
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-text-primary dark:text-dark-text-primary font-display">
+              Welcome back, {profile.name.split(" ")[0]}!
             </h1>
-            <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1 flex items-center gap-2">
-              <Clock className="w-3.5 h-3.5" />
-              Real-time expense logs sync: <span className="font-bold text-zinc-700 dark:text-zinc-300">{profile.email}</span>
+            <p className="text-xs sm:text-sm text-text-secondary dark:text-dark-text-secondary mt-1 flex items-center gap-2">
+              <Clock className="w-3.5 h-3.5 text-accent-coral" />
+              Real-time expense logs sync: <span className="font-bold text-text-primary dark:text-dark-text-primary">{profile.email}</span>
             </p>
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="px-4 py-2 bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 rounded-2xl shadow-xs text-right">
-              <span className="text-[10px] text-zinc-400 uppercase font-bold tracking-wider block">Income Allowance</span>
-              <span className="text-base font-extrabold text-zinc-900 dark:text-zinc-50 flex items-center gap-1">
-                <Briefcase className="w-3.5 h-3.5 text-emerald-500" />
+            <div className="px-5 py-3 bg-accent-gradient text-white rounded-2xl shadow-md shadow-accent-coral/20 text-right">
+              <span className="text-[10px] text-white/80 uppercase font-extrabold tracking-wider block mb-0.5">Monthly Income Limit</span>
+              <span className="text-base sm:text-lg font-extrabold flex items-center gap-1.5 justify-end font-display">
+                <Briefcase className="w-4 h-4 text-white" />
                 {profile.currency}{profile.monthlyIncome.toLocaleString()}
               </span>
             </div>
@@ -192,36 +192,34 @@ export default function App() {
         {/* ------------------------------------------------------------------------- */}
         {/* BENTO SUMMARY SECTION */}
         {/* ------------------------------------------------------------------------- */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="bento-summary-area">
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="bento-summary-area">
           
           {/* Card 1: Spends vs income */}
-          <div className="p-6 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800/80 shadow-xs flex flex-col justify-between hover:shadow-md transition-all duration-300">
+          <div className="p-5 rounded-2xl bg-bg-card dark:bg-dark-bg-card border-l-4 border-l-accent-coral border-y border-r border-border-card dark:border-dark-border shadow-[0_2px_12px_rgba(43,35,32,0.06)] hover:shadow-[0_6px_20px_rgba(43,35,32,0.12)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between">
             <div className="flex justify-between items-start">
               <div>
-                <span className="text-[10px] text-zinc-400 dark:text-zinc-500 font-bold uppercase tracking-wider block mb-1">
+                <span className="text-[10px] text-text-secondary dark:text-dark-text-secondary font-bold uppercase tracking-wider block mb-1">
                   Accumulated Spends
                 </span>
-                <h3 className="text-2xl font-black text-zinc-900 dark:text-zinc-50">
+                <h3 className="text-2xl font-black text-text-primary dark:text-dark-text-primary font-display">
                   {profile.currency}{totalSpend.toLocaleString()}
                 </h3>
               </div>
-              <div className="p-2.5 rounded-xl bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400">
+              <div className="p-2.5 rounded-xl bg-bg-card-alt dark:bg-dark-bg-card text-accent-coral border border-border-soft dark:border-dark-border">
                 <TrendingDown className="w-4 h-4" />
               </div>
             </div>
 
             <div className="mt-4 space-y-1.5">
               <div className="flex justify-between text-[11px] font-bold">
-                <span className="text-zinc-400">Total Allowance spent:</span>
-                <span className={spendPercentage > 85 ? "text-red-600" : "text-zinc-700 dark:text-zinc-300"}>
+                <span className="text-text-secondary dark:text-dark-text-secondary">Total Allowance spent:</span>
+                <span className={spendPercentage > 85 ? "text-accent-coral font-black" : "text-text-primary dark:text-dark-text-primary"}>
                   {spendPercentage}%
                 </span>
               </div>
-              <div className="w-full h-1.5 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+              <div className="w-full h-1.5 bg-bg-app dark:bg-dark-bg-app rounded-full overflow-hidden">
                 <div
-                  className={`h-full rounded-full transition-all duration-500 ${
-                    spendPercentage > 85 ? "bg-red-500" : "bg-indigo-600"
-                  }`}
+                  className="h-full rounded-full transition-all duration-500 bg-accent-gradient"
                   style={{ width: `${spendPercentage}%` }}
                 />
               </div>
@@ -229,50 +227,50 @@ export default function App() {
           </div>
 
           {/* Card 2: Remaining budget */}
-          <div className="p-6 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800/80 shadow-xs flex flex-col justify-between hover:shadow-md transition-all duration-300">
+          <div className="p-5 rounded-2xl bg-bg-card dark:bg-dark-bg-card border-l-4 border-l-accent-green border-y border-r border-border-card dark:border-dark-border shadow-[0_2px_12px_rgba(43,35,32,0.06)] hover:shadow-[0_6px_20px_rgba(43,35,32,0.12)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between">
             <div className="flex justify-between items-start">
               <div>
-                <span className="text-[10px] text-zinc-400 dark:text-zinc-500 font-bold uppercase tracking-wider block mb-1">
+                <span className="text-[10px] text-text-secondary dark:text-dark-text-secondary font-bold uppercase tracking-wider block mb-1">
                   Surplus Reserve
                 </span>
-                <h3 className={`text-2xl font-black ${
-                  remainingBudget === 0 ? "text-red-600" : "text-emerald-600 dark:text-emerald-400"
+                <h3 className={`text-2xl font-black font-display ${
+                  remainingBudget === 0 ? "text-accent-coral" : "text-accent-green"
                 }`}>
                   {profile.currency}{remainingBudget.toLocaleString()}
                 </h3>
               </div>
-              <div className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400">
+              <div className="p-2.5 rounded-xl bg-accent-green/10 text-accent-green">
                 <TrendingUp className="w-4 h-4" />
               </div>
             </div>
 
-            <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-4 leading-relaxed">
+            <p className="text-[11px] text-text-secondary dark:text-dark-text-secondary mt-4 leading-relaxed">
               {remainingBudget === 0 ? (
-                <span className="text-red-600 font-bold">⚠️ Warning: You have reached your monthly income ceiling!</span>
+                <span className="text-accent-coral font-bold">⚠️ Warning: You have reached your monthly income ceiling!</span>
               ) : (
-                <>You have <span className="font-bold text-zinc-800 dark:text-zinc-200">{profile.currency}{remainingBudget.toLocaleString()}</span> left before exceeding your designated budget allowance.</>
+                <>You have <span className="font-bold text-text-primary dark:text-dark-text-primary">{profile.currency}{remainingBudget.toLocaleString()}</span> left before exceeding your designated budget allowance.</>
               )}
             </p>
           </div>
 
           {/* Card 3: Savings Accumulations */}
-          <div className="p-6 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800/80 shadow-xs flex flex-col justify-between hover:shadow-md transition-all duration-300 sm:col-span-2 lg:col-span-1">
+          <div className="p-5 rounded-2xl bg-bg-card dark:bg-dark-bg-card border-l-4 border-l-accent-purple border-y border-r border-border-card dark:border-dark-border shadow-[0_2px_12px_rgba(43,35,32,0.06)] hover:shadow-[0_6px_20px_rgba(43,35,32,0.12)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between sm:col-span-2 lg:col-span-1">
             <div className="flex justify-between items-start">
               <div>
-                <span className="text-[10px] text-zinc-400 dark:text-zinc-500 font-bold uppercase tracking-wider block mb-1">
+                <span className="text-[10px] text-text-secondary dark:text-dark-text-secondary font-bold uppercase tracking-wider block mb-1">
                   Wealth Targets Savings
                 </span>
-                <h3 className="text-2xl font-black text-indigo-600 dark:text-indigo-400">
+                <h3 className="text-2xl font-black text-accent-purple dark:text-accent-purple font-display">
                   {profile.currency}{totalSavedSoFar.toLocaleString()}
                 </h3>
               </div>
-              <div className="p-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/25 text-indigo-600 dark:text-indigo-400">
-                <Sparkles className="w-4 h-4 animate-spin-slow" />
+              <div className="p-2.5 rounded-xl bg-accent-purple/10 text-accent-purple">
+                <Sparkles className="w-4 h-4 animate-pulse" />
               </div>
             </div>
 
-            <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-4 flex items-center gap-1.5">
-              <span className="font-bold text-emerald-600">+{savingsGoals.length}</span> active savings vaults logged and tracking progress.
+            <p className="text-[11px] text-text-secondary dark:text-dark-text-secondary mt-4 flex items-center gap-1.5">
+              <span className="font-extrabold text-accent-green">+{savingsGoals.length}</span> active savings vaults logged and tracking progress.
             </p>
           </div>
         </section>
@@ -280,10 +278,10 @@ export default function App() {
         {/* ------------------------------------------------------------------------- */}
         {/* INTERACTIVE WORKSPACE BENTO GRID */}
         {/* ------------------------------------------------------------------------- */}
-        <main className="grid grid-cols-1 lg:grid-cols-12 gap-8" id="dashboard-workspace">
+        <main className="grid grid-cols-1 lg:grid-cols-3 gap-6" id="dashboard-workspace">
           
-          {/* LEFT WING (Analytics, Logs & Tables - 7 Columns) */}
-          <div className="lg:col-span-7 space-y-8 flex flex-col">
+          {/* LEFT WING (Analytics, Logs & Tables - 2 Columns) */}
+          <div className="lg:col-span-2 space-y-6 flex flex-col">
             
             {/* Visualizer section */}
             <section id="workspace-charts" className="order-1">
@@ -306,8 +304,8 @@ export default function App() {
             </section>
           </div>
 
-          {/* RIGHT WING (AI Coach Chatbot, Vision Scanner, Savings & Profile - 5 Columns) */}
-          <div className="lg:col-span-5 space-y-8 flex flex-col">
+          {/* RIGHT WING (AI Coach Chatbot, Vision Scanner, Savings & Profile - 1 Column) */}
+          <div className="lg:col-span-1 space-y-6 flex flex-col">
             
             {/* AI Coach section */}
             <section id="workspace-ai-coach" className="order-1 h-[450px]">
@@ -353,8 +351,8 @@ export default function App() {
         </main>
 
         {/* Elegant Institutional Footer */}
-        <footer className="pt-8 border-t border-zinc-200/50 dark:border-zinc-800 text-center text-[11px] font-medium text-zinc-400 dark:text-zinc-600 space-y-2">
-          <p>© 2026 SmartSpend AI Personal Finance Engines. Powered securely by Gemini 3.5 Models.</p>
+        <footer className="pt-8 border-t border-border-soft dark:border-dark-border text-center text-[11px] font-medium text-text-muted dark:text-dark-text-muted space-y-2">
+          <p>© 2026 PennyWise AI Personal Finance Engines. Powered securely by Gemini 3.5 Models.</p>
           <p className="px-6 max-w-xl mx-auto leading-relaxed">
             Note on Architecture: Implemented securely using a full-stack Node.js + Express backend to shield AI API gateway keys completely from browser inspections.
           </p>
